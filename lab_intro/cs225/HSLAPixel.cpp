@@ -15,12 +15,12 @@ namespace cs225 {
   HSLAPixel::HSLAPixel() {
 
   }
-  HSLAPixel(double hue, double saturation, double luminance) {
+  HSLAPixel::HSLAPixel(double hue, double saturation, double luminance) {
     h = hue;
     s = saturation;
     l = luminance;
   }
-  HSLAPixel(double hue, double saturation, double luminance, double alpha) {
+  HSLAPixel::HSLAPixel(double hue, double saturation, double luminance, double alpha) {
     h = hue;
     s = saturation;
     l = luminance;
