@@ -93,10 +93,20 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
 PNG illinify(PNG image) {
   double illini_orange = 11;
   double illini_blue = 216;
+  double distance_orange;
+  double distance_blue;
   for (unsigned x = 0; x < image.width(); x++) {
     for (unsigned y = 0; y < image.height(); y++) {
       HSLAPixel &pixel = image.getPixel(x,y);
-      if (abs((pixel.h - illini_orange)/(pixel.h-illini_blue)) > 1) {
+      distance_orange = abs(pixel.h - illini_orange);
+      distance_blue = abs(pixel.h - illini_blue);
+      if (abs(pixel.h - 360 - illini_orange) < distance_orange) {
+        distance_orange = abs(pixel.h - 360 - illini_orange);
+      }
+      if (abs(pixel.h - 360 - illini_blue) < distance_blue) {
+        distance_blue = abs(pixel.h - 360 - illini_blue);
+      }
+      if (distance_orange/distance_blue > 1) {
         pixel.h = illini_blue;
       }
       else {
