@@ -51,7 +51,7 @@ PNG grayscale(PNG image) {
  * is a total of `sqrt((3 * 3) + (4 * 4)) = sqrt(25) = 5` pixels away and
  * its luminance is decreased by 2.5% (0.975x its original value).  At a
  * distance over 160 pixels away, the luminance will always decreased by 80%.
- * 
+ *
  * The modified PNG is then returned.
  *
  * @param image A PNG object which holds the image data to be modified.
@@ -61,11 +61,24 @@ PNG grayscale(PNG image) {
  * @return The image with a spotlight.
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
-
+  double temp_distance;
+  double temp_fraction;
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel &pixel = image.getPixel(x,y);
+      temp_distance = sqrt(pow(x - centerX, 2) + pow(y - centerY, 2));
+      if (temp_distance >= 160) {
+        pixel.l = (0.2)*pixel.l;
+      }
+      else {
+        temp_fraction = 1 - (temp_distance/200);
+        pixel.l = temp_fraction*pixel.l;
+      }
+    }
+  }
   return image;
-  
 }
- 
+
 
 /**
  * Returns a image transformed to Illini colors.
@@ -78,10 +91,22 @@ PNG createSpotlight(PNG image, int centerX, int centerY) {
  * @return The illinify'd image.
 **/
 PNG illinify(PNG image) {
-
+  double illini_orange = 11;
+  double illini_blue = 216;
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel &pixel = image.getPixel(x,y);
+      if (abs((pixel.h - illini_orange)/(pixel.h-illini_blue)) > 1) {
+        pixel.h = illini_blue;
+      }
+      else {
+        pixel.h = illini_orange;
+      }
+    }
+  }
   return image;
 }
- 
+
 
 /**
 * Returns an immge that has been watermarked by another image.
@@ -96,6 +121,21 @@ PNG illinify(PNG image) {
 * @return The watermarked image.
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
-
+  for (unsigned x = 0; x < secondImage.width(); x++) {
+    for (unsigned y = 0; y < secondImage.height(); y++) {
+      if (x < firstImage.width() && y < firstImage.height()) {
+        HSLAPixel &pixel_second = secondImage.getPixel(x,y);
+        if (pixel_second.l == 1) {
+          HSLAPixel &pixel_first = firstImage.getPixel(x,y);
+          if (pixel_first.l <= 0.8) {
+            pixel_first.l = pixel_first.l + 0.2;
+          }
+          else {
+            pixel_first.l = 1;
+          }
+        }
+      }
+    }
+  }
   return firstImage;
 }
