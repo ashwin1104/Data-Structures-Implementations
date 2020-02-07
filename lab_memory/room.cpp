@@ -35,6 +35,7 @@ Room& Room::operator=(const Room& other)
     return *this;
 }
 
+
 Room::~Room()
 {
     clear();
@@ -72,6 +73,9 @@ void Room::copy(const Room& other)
     capacity = other.capacity;
     count = other.count;
     letterCount = other.letterCount;
-    letters = other.letters;
-
+    max_letters = other.max_letters;
+    letters = new Letter[max_letters];
+    for (int i = 0; i < letterCount; i++) {
+      letters[i] = other.letters[i];
+    }
 }
