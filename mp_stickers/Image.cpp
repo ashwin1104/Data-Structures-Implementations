@@ -113,6 +113,9 @@ void Image::rotateColor(double degrees) {
       if (this->getPixel(x,y).h > 360) {
         this->getPixel(x,y).h -= 360;
       }
+      else if (this->getPixel(x,y).h < 0) {
+        this->getPixel(x,y).h += 360;
+      }
     }
   }
 }
