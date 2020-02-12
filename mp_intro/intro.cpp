@@ -42,7 +42,7 @@ cs225::PNG myArt(unsigned int width, unsigned int height) {
         // std::cout << hidden_formula%150 << std::endl;
         // hue = 360 - abs(hidden_formula%150);
         hue = count_hue;
-        std::cout << hue << std::endl;
+        // std::cout << hue << std::endl;
         if (count_hue >= 360) {
           count_hue = 0;
         }
