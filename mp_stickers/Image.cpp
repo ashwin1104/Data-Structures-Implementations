@@ -145,10 +145,10 @@ void Image::illinify() {
   }
 }
 void Image::scale(double factor) {
-  unsigned int height = this->height() * factor;
-  unsigned int width = this->width() * factor;
-  double xreverse = (this->width())/((double) width);
-  double yreverse = (this->height())/((double) height);
+  unsigned int height = height() * factor;
+  unsigned int width = width() * factor;
+  double xreverse = (width())/((double) width);
+  double yreverse = (height())/((double) height);
   if (xreverse > yreverse) {
     xreverse = yreverse;
   }
@@ -156,16 +156,16 @@ void Image::scale(double factor) {
     yreverse = xreverse;
   }
   cs225::PNG old(*this);
-  this->resize(width, height);
+  resize(width, height);
   for (unsigned int x = 0; x < width; x++) {
     for (unsigned int y = 0; y < height; y++) {
-      this->getPixel(x,y) = old.getPixel((int)x*xreverse,(int)y*yreverse);
+      getPixel(x,y) = old.getPixel((int)x*xreverse,(int)y*yreverse);
     }
   }
 }
 void Image::scale(unsigned w, unsigned h) {
-  double xfactor = (double) w/this->width();
-  double yfactor = (double) w/this->height();
+  double xfactor = (double) w/width();
+  double yfactor = (double) h/height();
   double factor;
   if (xfactor > yfactor) {
     scale(yfactor);
