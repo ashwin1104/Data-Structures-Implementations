@@ -4,8 +4,8 @@
 #include <cmath>
 
 void Image::lighten() {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < width(); x++) {
+    for (unsigned y = 0; y < height(); y++) {
       if (this->getPixel(x,y).l+0.1 <= 1.0) {
         this->getPixel(x,y).l += 0.1;
       }
@@ -16,8 +16,8 @@ void Image::lighten() {
   }
 }
 void Image::lighten(double amount) {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < width(); x++) {
+    for (unsigned y = 0; y < height(); y++) {
       if (this->getPixel(x,y).l+amount <= 1.0) {
         this->getPixel(x,y).l += amount;
       }
@@ -28,8 +28,8 @@ void Image::lighten(double amount) {
   }
 }
 void Image::darken() {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       if (this->getPixel(x,y).l-0.1 >= 0) {
         this->getPixel(x,y).l -= 0.1;
       }
@@ -40,8 +40,8 @@ void Image::darken() {
   }
 }
 void Image::darken(double amount) {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       if (this->getPixel(x,y).l-amount >= 0) {
         this->getPixel(x,y).l -= amount;
       }
@@ -52,8 +52,8 @@ void Image::darken(double amount) {
   }
 }
 void Image::saturate() {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       if (this->getPixel(x,y).s+0.1 <= 1.0) {
         this->getPixel(x,y).s += 0.1;
       }
@@ -64,8 +64,8 @@ void Image::saturate() {
   }
 }
 void Image::saturate(double amount) {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       if (this->getPixel(x,y).s+amount <= 1.0) {
         this->getPixel(x,y).s += amount;
       }
@@ -76,8 +76,8 @@ void Image::saturate(double amount) {
   }
 }
 void Image::desaturate() {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       if (this->getPixel(x,y).s-0.1 >= 0.0) {
         this->getPixel(x,y).s -= 0.1;
       }
@@ -88,8 +88,8 @@ void Image::desaturate() {
   }
 }
 void Image::desaturate(double amount) {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       if (this->getPixel(x,y).s-amount >= 0.0) {
         this->getPixel(x,y).s -= amount;
       }
@@ -100,15 +100,15 @@ void Image::desaturate(double amount) {
   }
 }
 void Image::grayscale() {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       this->getPixel(x,y).s = 0.0;
     }
   }
 }
 void Image::rotateColor(double degrees) {
-  for (unsigned int x = 0; x < this->width(); x++) {
-    for (unsigned int y = 0; y < this->height(); y++) {
+  for (unsigned x = 0; x < this->width(); x++) {
+    for (unsigned y = 0; y < this->height(); y++) {
       this->getPixel(x,y).h += degrees;
       if (this->getPixel(x,y).h > 360) {
         this->getPixel(x,y).h -= 360;
@@ -145,10 +145,10 @@ void Image::illinify() {
   }
 }
 void Image::scale(double factor) {
-  unsigned int height = height() * factor;
-  unsigned int width = width() * factor;
-  double xreverse = (width())/((double) width);
-  double yreverse = (height())/((double) height);
+  unsigned height = factor*(this->height());
+  unsigned width = factor*(this->width());
+  double xreverse = (this->width())/((double) width);
+  double yreverse = (this->height())/((double) height);
   if (xreverse > yreverse) {
     xreverse = yreverse;
   }
