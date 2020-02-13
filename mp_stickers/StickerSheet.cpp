@@ -87,7 +87,6 @@ void StickerSheet::changeMaxStickers(unsigned max) {
     }
     for (unsigned int i = index; i < sticker_max; i++) {
       if (layer[index] == 1) {
-        std::cout << stickers[index]->width() << std::endl;
         delete stickers[index];
         stickers[index] = nullptr;
         x[index] = 0;
