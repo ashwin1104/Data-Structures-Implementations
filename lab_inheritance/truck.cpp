@@ -5,6 +5,7 @@
 
 #include "truck.h"
 #include "color.h"
+#include "line.h"
 
 using cs225::PNG;
 using cs225::HSLAPixel;
@@ -31,7 +32,8 @@ const HSLAPixel WHEEL_COLOR = color::BLACK;
 const int NUM_WHEELS = 5;
 
 Truck::Truck(const Vector2& pcenter)
-    : center_(pcenter),
+    :
+      center_(pcenter),
       wheels(new Circle*[NUM_WHEELS]),
       trailer(
           new Rectangle(Vector2(center_.x() - TRAILER_WIDTH / 2, center_.y()),
@@ -138,4 +140,12 @@ void Truck::clear()
     delete window;
     delete engine;
 }
-
+void Truck::draw(cs225::PNG* canvas) const {
+  trailer->draw(canvas);
+  cabin->draw(canvas);
+  window->draw(canvas);
+  engine->draw(canvas);
+  for (int i = 0; i < NUM_WHEELS; i++) {
+      wheels[i]->draw(canvas);
+  }
+}
