@@ -22,18 +22,21 @@ namespace QuackFun {
  * problem. Its pop function works a bit differently from the stack we
  * built. Try searching for "stl stack" to learn how to use it.
  *
- * @param s A stack holding values to sum.
+ * @param  s A stack holding values to sum.
  * @return  The sum of all the elements in the stack, leaving the original
  *          stack in the same state (unchanged).
  */
 template <typename T>
 T sum(stack<T>& s)
 {
-
-    // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
-                // Note: T() is the default value for objects, and 0 for
-                // primitive types
+  if (s.empty()) {
+    return T();
+  }
+  T front = s.top();
+  s.pop();
+  T next = sum<T>(s);
+  s.push(front);
+  return front + next;
 }
 
 /**
@@ -55,9 +58,24 @@ T sum(stack<T>& s)
  */
 bool isBalanced(queue<char> input)
 {
-
-    // @TODO: Make less optimistic
-    return true;
+  char temp;
+  stack<char> helper;
+  while (!input.empty()) {
+    temp = input.front();
+    if (temp == '[') {
+      helper.push(temp);
+    }
+    else if (temp == ']') {
+      if (!helper.empty()) {
+        helper.pop();
+      }
+      else {
+        return false;
+      }
+    }
+    input.pop();
+  }
+  return helper.empty();
 }
 
 /**
@@ -78,9 +96,38 @@ bool isBalanced(queue<char> input)
 template <typename T>
 void scramble(queue<T>& q)
 {
+    queue<T> q2(q);
     stack<T> s;
-    // optional: queue<T> q2;
-
-    // Your code here
+    for (unsigned i = 0; i < q2.size(); i++) {
+      q.pop();
+    }
+    q.push(q2.front());
+    q2.pop();
+    int block_num = 2;
+    int remaining = q2.size();
+    while (!q2.empty()) {
+      if (block_num % 2 == 1) {
+        for (int count = 0; count < block_num; count++) {
+          q.push(q2.front());
+          q2.pop();
+        }
+        remaining = q2.size();
+        block_num++;
+        continue;
+      }
+      if (remaining - block_num < 0) {
+        block_num = remaining;
+      }
+      for (int count = 0; count < block_num; count++) {
+        s.push(q2.front());
+        q2.pop();
+      }
+      for (int count = 0; count < block_num; count++) {
+        q.push(s.top());
+        s.pop();
+      }
+      remaining = q2.size();
+      block_num++;
+    }
 }
 }
