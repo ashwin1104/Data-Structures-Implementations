@@ -154,35 +154,32 @@ void List<T>::tripleRotate() {
   ListNode *after;
   for (int i = 0; i < length_/3; i++) {
     curr = curr->next;
-    if (i == 0) {
+
+    if (i == 0)
+    {
       curr->prev = temp->prev;
-
       head_ = curr;
-
-      curr = curr->next;
-      after = curr->next;
-
-      curr->next = temp;
-      temp->prev = curr;
-      temp->next = after;
-      curr = after;
     }
-    if (i > 0) {
+    else if (i > 0)
+    {
       temp->next = curr;
       curr->prev = temp;
-
       temp = after;
-      curr = curr->next;
-      after = curr->next;
-
-      curr->next = temp;
-      temp->prev = curr;
-      temp->next = after;
-      curr = after;
     }
-    if (i+1 > length_/3) {
+
+    curr = curr->next;
+    after = curr->next;
+
+    curr->next = temp;
+    temp->prev = curr;
+    temp->next = after;
+    curr = after;
+
+    if (i+1 > length_/3)
+    {
       tail_ = temp;
     }
+
   }
 }
 
