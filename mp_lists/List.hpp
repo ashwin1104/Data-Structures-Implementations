@@ -337,54 +337,49 @@ void List<T>::mergeWith(List<T> &otherList)
 template <typename T>
 typename List<T>::ListNode *List<T>::merge(ListNode *first, ListNode *second)
 {
+  ListNode *new_head = first;
+  ListNode *temp_node = new_head;
   ListNode *temp_first = first;
   ListNode *temp_second = second;
-  ListNode *temp_first_next;
-  ListNode *temp_second_next;
-  ListNode *new_head = head_;
-  if (first == NULL || second == NULL || first == second)
+  if (second->data < first->data)
   {
-    return new_head;
+    new_head = temp_second;
+    temp_second = temp_second->next;
+    temp_node = new_head;
   }
-  while (temp_second != NULL)
+  else
   {
-    if (temp_first->data > temp_second->data)
+    temp_first = temp_first->next;
+  }
+  while (temp_first != NULL && temp_second != NULL)
+  {
+    if (temp_second->data < temp_first->data)
     {
-      temp_second_next = temp_second->next;
-      temp_second->next = temp_first;
-      temp_first->prev = temp_second;
-      if (temp_second == second)
-      {
-        new_head = temp_second;
-      }
-      temp_second = temp_second_next;
+      temp_node->next = temp_second;
+      temp_second->prev = temp_node;
+      temp_second = temp_second->next;
     }
-    while ((temp_first != NULL) && (temp_second != NULL) && (temp_first->data < temp_second->data))
+    else
     {
-      if (temp_first->next == NULL)
-      {
-        // std::cout << "first: " << temp_first->data << " second: " << temp_second->data << std::endl;
-        temp_first->next = temp_second;
-        temp_second->prev = temp_first;
-        // std::cout << "first_next: " << temp_first->next->data << " first_prev: " << temp_first->prev->data << std::endl;
-        // std::cout << "second_next: NULL "
-        //           << " second_prev: " << temp_second->prev->data << std::endl;
-
-        return new_head;
-      }
-      if (temp_first->next->data > temp_second->data)
-      {
-        temp_first_next = temp_first->next;
-        temp_second_next = temp_second->next;
-        temp_first->next = temp_second;
-        temp_second->next = temp_first_next;
-        temp_second->prev = temp_first;
-        temp_first_next->prev = temp_second;
-        temp_second = temp_second_next;
-      }
-
+      temp_node->next = temp_first;
+      temp_first->prev = temp_node;
       temp_first = temp_first->next;
     }
+    temp_node = temp_node->next;
+  }
+  if (temp_first == NULL && temp_second == NULL)
+  {
+    // do nothing
+  }
+  else if (temp_first == NULL)
+  {
+    temp_node->next = temp_second;
+    temp_second->prev = temp_node;
+  }
+  else
+  {
+    temp_node->next = temp_first;
+    temp_first->prev = temp_node;
   }
   return new_head;
 }
@@ -403,6 +398,23 @@ typename List<T>::ListNode *List<T>::merge(ListNode *first, ListNode *second)
 template <typename T>
 typename List<T>::ListNode *List<T>::mergesort(ListNode *start, int chainLength)
 {
-  /// @todo Graded in MP3.2
-  return NULL;
+  ListNode *temp_start = start;
+  int second_length = chainLength / 2;
+  ListNode *final;
+  if (chainLength == 1)
+  {
+    start->prev = NULL;
+    start->next = NULL;
+    return start;
+  }
+  if (chainLength % 2 == 1)
+  {
+    second_length += 1;
+  }
+  for (int i = 0; i < chainLength / 2; i++)
+  {
+    temp_start = temp_start->next;
+  }
+  final = merge(mergesort(start, chainLength / 2), mergesort(temp_start, second_length));
+  return final;
 }

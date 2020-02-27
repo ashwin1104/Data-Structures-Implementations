@@ -106,12 +106,21 @@ TEST_CASE("List::merge simple", "[weight=5][part=1][valgrind]")
     List<int> list1;
     List<int> list2;
 
+    list1.insertBack(0);
+    list1.insertBack(0);
     list1.insertBack(1);
+    list1.insertBack(9);
+    list1.insertBack(14);
+    list1.insertBack(20);
+    list1.insertBack(1000);
 
-    list2.insertBack(2);
-    list2.insertBack(3);
-    list2.insertBack(5);
-    list2.insertBack(7);
+    list2.insertBack(19);
+    list2.insertBack(26);
+    list2.insertBack(40);
+    list2.insertBack(50);
+    list2.insertBack(101);
+    list2.insertBack(1001);
+    list2.insertBack(1101);
 
     list1.mergeWith(list2);
     stringstream s1;
@@ -120,7 +129,7 @@ TEST_CASE("List::merge simple", "[weight=5][part=1][valgrind]")
     list1.print(s1);
     list2.print(s2);
     REQUIRE("< >" == s2.str());
-    REQUIRE("< 1 2 3 5 7 >" == s1.str());
+    REQUIRE("< 0 0 1 9 14 19 20 26 40 50 101 1000 1001 1101 >" == s1.str());
 }
 
 TEST_CASE("List::merge", "[weight=10][part=2][valgrind]")
@@ -162,84 +171,84 @@ TEST_CASE("List::merge", "[weight=10][part=2][valgrind]")
     REQUIRE(out == expected);
 }
 
-// TEST_CASE("List::sort simple #1", "[weight=2][part=2][valgrind]")
-// {
-//     List<int> list;
+TEST_CASE("List::sort simple #1", "[weight=2][part=2][valgrind]")
+{
+    List<int> list;
 
-//     list.insertBack(2);
-//     list.insertBack(5);
-//     list.insertBack(2);
+    list.insertBack(2);
+    list.insertBack(5);
+    list.insertBack(2);
 
-//     list.sort();
+    list.sort();
 
-//     stringstream s;
-//     list.print(s);
+    stringstream s;
+    list.print(s);
 
-//     REQUIRE(s.str() == "< 2 2 5 >");
-// }
+    REQUIRE(s.str() == "< 2 2 5 >");
+}
 
-// TEST_CASE("List::sort simple #2", "[weight=2][part=2][valgrind]")
-// {
-//     List<std::string> list;
+TEST_CASE("List::sort simple #2", "[weight=2][part=2][valgrind]")
+{
+    List<std::string> list;
 
-//     list.insertBack("c");
-//     list.insertBack("b");
-//     list.insertBack("a");
+    list.insertBack("c");
+    list.insertBack("b");
+    list.insertBack("a");
 
-//     list.sort();
+    list.sort();
 
-//     stringstream s;
-//     list.print(s);
+    stringstream s;
+    list.print(s);
 
-//     REQUIRE(s.str() == "< a b c >");
-// }
+    REQUIRE(s.str() == "< a b c >");
+}
 
-// TEST_CASE("List::sort #1", "[weight=5][part=2]")
-// {
-//     PNG expected;
-//     expected.readFromFile("tests/expected-sort_1.png");
+TEST_CASE("List::sort #1", "[weight=5][part=2]")
+{
+    PNG expected;
+    expected.readFromFile("tests/expected-sort_1.png");
 
-//     srand(225);
+    srand(225);
 
-//     BlockPNG b;
-//     b.readFromFile("tests/alma.png");
+    BlockPNG b;
+    b.readFromFile("tests/alma.png");
 
-//     int d = 60;
-//     vector<int> v = buildVector(b, d);
-//     random_shuffle(v.begin(), v.end());
+    int d = 60;
+    vector<int> v = buildVector(b, d);
+    random_shuffle(v.begin(), v.end());
 
-//     List<int> img_srt(v.begin(), v.end());
-//     img_srt.sort();
-//     vector<int> v2(img_srt.begin(), img_srt.end());
+    List<int> img_srt(v.begin(), v.end());
+    img_srt.sort();
+    vector<int> v2(img_srt.begin(), img_srt.end());
 
-//     PNG b3 = b.genImg(v2, d);
-//     b3.writeToFile("actual-sort_1.png");
-//     INFO("Output image `b3` saved as actual-sort_1.png");
+    PNG b3 = b.genImg(v2, d);
+    b3.writeToFile("actual-sort_1.png");
+    INFO("Output image `b3` saved as actual-sort_1.png");
 
-//     REQUIRE(b3 == expected);
-// }
+    REQUIRE(b3 == expected);
+}
 
-// TEST_CASE("List::sort #2", "[weight=5][part=2]")
-// {
-//     PNG expected;
-//     expected.readFromFile("tests/expected-sort_2.png");
+TEST_CASE("List::sort #2", "[weight=5][part=2]")
+{
+    PNG expected;
+    expected.readFromFile("tests/expected-sort_2.png");
 
-//     srand(225);
+    srand(225);
 
-//     BlockPNG b;
-//     b.readFromFile("tests/alma.png");
+    BlockPNG b;
+    b.readFromFile("tests/alma.png");
 
-//     int d = 1;
-//     vector<int> v = buildVector(b, d);
-//     random_shuffle(v.begin(), v.end());
+    int d = 1;
+    vector<int> v = buildVector(b, d);
+    random_shuffle(v.begin(), v.end());
 
-//     List<int> img_srt(v.begin(), v.end());
-//     img_srt.sort();
-//     vector<int> v2(img_srt.begin(), img_srt.end());
+    List<int> img_srt(v.begin(), v.end());
+    img_srt.sort();
+    vector<int> v2(img_srt.begin(), img_srt.end());
 
-//     PNG b3 = b.genImg(v2, d);
-//     b3.writeToFile("actual-sort_2.png");
-//     INFO("Output image `b3` saved as actual-sort_2.png");
+    PNG b3 = b.genImg(v2, d);
+    b3.writeToFile("actual-sort_2.png");
+    INFO("Output image `b3` saved as actual-sort_2.png");
 
-//     REQUIRE(b3 == expected);
-// }
+    REQUIRE(b3 == expected);
+}
