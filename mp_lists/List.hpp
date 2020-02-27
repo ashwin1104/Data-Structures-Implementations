@@ -124,9 +124,13 @@ template <typename T>
 typename List<T>::ListNode *List<T>::split(ListNode *start, int splitPoint)
 {
   /// @todo Graded in MP3.1
-  if (start == NULL)
+  if (splitPoint <= 0 || start == NULL)
   {
     return start;
+  }
+  if (splitPoint >= length_)
+  {
+    return NULL;
   }
 
   ListNode *curr = start;
@@ -138,15 +142,7 @@ typename List<T>::ListNode *List<T>::split(ListNode *start, int splitPoint)
       return NULL;
     }
   }
-  tail_ = curr->prev;
-  if (head_ == curr)
-  {
-    head_ = NULL;
-  }
-  if (tail_ != NULL)
-  {
-    tail_->next = NULL;
-  }
+  curr->prev->next = NULL;
   curr->prev = NULL;
   return curr;
 }
