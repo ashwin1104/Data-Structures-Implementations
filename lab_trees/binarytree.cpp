@@ -23,6 +23,9 @@ int BinaryTree<T>::height() const
  * @param subRoot
  * @return The height of the subtree
  */
+
+
+
 template <typename T>
 int BinaryTree<T>::height(const Node* subRoot) const
 {
@@ -78,10 +81,28 @@ void BinaryTree<T>::printLeftToRight(const Node* subRoot) const
     template <typename T>
 void BinaryTree<T>::mirror()
 {
-    //your code here
+  mirror(root);
 }
 
+template <typename T>
+void BinaryTree<T>::mirror(Node* subRoot)
+{
+  Node* temp_left;
+  if (subRoot == NULL) {
+    return;
+  }
+  if (subRoot->left != NULL) {
+    mirror(subRoot->left);
 
+  }
+  if (subRoot->right != NULL) {
+    mirror(subRoot->right);
+  }
+  temp_left = subRoot->left;
+  subRoot->left = subRoot->right;
+  subRoot->right = temp_left;
+  return;
+}
 /**
  * isOrdered() function iterative version
  * @return True if an in-order traversal of the tree would produce a
@@ -107,4 +128,3 @@ bool BinaryTree<T>::isOrderedRecursive() const
     // your code here
     return false;
 }
-

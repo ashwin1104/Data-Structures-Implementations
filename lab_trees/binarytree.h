@@ -170,8 +170,7 @@ class BinaryTree
          * @param subRoot The current node in the recursion
          */
         void printLeftToRight(const Node* subRoot) const;
-
-
+        void mirror(Node* subRoot);
 
 
         /**
