@@ -29,7 +29,7 @@ public:
     stack.push(root);
     typename BinaryTree<T>::Node *temp = root->left;
 
-    while (temp != NULL)
+    while (temp != NULL && stack.empty() != true)
     {
       stack.push(temp);
       temp = temp->left;
