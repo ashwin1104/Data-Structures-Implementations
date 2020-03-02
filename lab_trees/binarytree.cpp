@@ -115,7 +115,7 @@ bool BinaryTree<T>::isOrderedIterative() const
   InorderTraversal<T> in(getRoot());
   Node *temp = NULL;
 
-  for (TreeTraversal<T>::Iterator i = in.begin(); i != in.end(); ++i)
+  for (TreeTraversal<int>::Iterator i = in.begin(); i != in.end(); ++i)
   {
     if (temp == NULL)
     {
