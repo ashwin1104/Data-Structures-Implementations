@@ -31,7 +31,7 @@ public:
 
     while (temp != NULL)
     {
-      stack.push(curr);
+      stack.push(temp);
       temp = temp->left;
     }
   }
