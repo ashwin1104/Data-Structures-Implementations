@@ -125,6 +125,7 @@ bool BinaryTree<T>::isOrderedIterative() const
     {
       return false;
     }
+    temp = *i;
   }
   return true;
 }
