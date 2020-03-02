@@ -1,5 +1,5 @@
 #pragma once
-	
+
 #include "../binarytree.h"
 #include "TreeTraversal.h"
 
@@ -13,44 +13,53 @@
  * and a given root node.
  */
 template <typename T>
-class InorderTraversal : public TreeTraversal<T> {
-  public: 
-    /**
+class InorderTraversal : public TreeTraversal<T>
+{
+public:
+  /**
      * Initializes a Inorder TreeTraversal of a tree,
      * with the traversal storing the tree's root.
      * Hint: See lab handout for guidance
      *
      * @param root The root node of the tree
-     */	
-    InorderTraversal(typename BinaryTree<T>::Node* root)
-	    : root(root)
-    {
-      stack.push(root);	
-      // your code here
-    }
+     */
+  InorderTraversal(typename BinaryTree<T>::Node *root)
+      : root(root)
+  {
+    stack.push(root);
+    typename BinaryTree<T>::Node *temp = root->left;
 
-    /**
+    while (temp != NULL)
+    {
+      stack.push(curr);
+      temp = temp->left;
+    }
+  }
+
+  /**
      * Returns an iterator for the traversal starting at the root node.
      * Important for sake of looping through an iterator's contents.
      * 
      * @return The iterator object pointing to the first node in the traversal
-     */	
-    typename TreeTraversal<T>::Iterator begin() {
-      return typename TreeTraversal<T>::Iterator(this, root);
-    }
+     */
+  typename TreeTraversal<T>::Iterator begin()
+  {
+    return typename TreeTraversal<T>::Iterator(this, root);
+  }
 
-    /**
+  /**
      * Returns an iterator for the traversal pointing to the
      * element one past the end of the traversal.
      * Important for the sake of looping through an iterator's contents
      * 
      * @return The iterator object pointing to the elemnt after the end of the traversal.
-     */	
-    typename TreeTraversal<T>::Iterator end() {
-      return typename TreeTraversal<T>::Iterator();
-    }
+     */
+  typename TreeTraversal<T>::Iterator end()
+  {
+    return typename TreeTraversal<T>::Iterator();
+  }
 
-    /**
+  /**
      * Given a node in the tree, add the next appropriate
      * nodes to the stack such that when popped, and inorder
      * traversal is simulated.
@@ -58,43 +67,56 @@ class InorderTraversal : public TreeTraversal<T> {
      * 
      * @param treeNode The subroot that determines what next nodes
      *        should be added to the traversal
-     */	
-    void add(typename BinaryTree<T>::Node *& treeNode) {
-      // your code here
-      return;	
+     */
+  void add(typename BinaryTree<T>::Node *&treeNode)
+  {
+    if (treeNode->right == NULL)
+    {
+      return;
     }
+    typename BinaryTree<T>::Node *temp = treeNode->right;
+    while (temp != NULL)
+    {
+      stack.push(temp);
+      temp = temp->left;
+    }
+    return;
+  }
 
-    /**
+  /**
      * Removes and returns the current node in the traversal.
      * 
      * @return The current node in the traversal
-     */	
-    typename BinaryTree<T>::Node* pop() {
-      typename BinaryTree<T>::Node* topNode = stack.top();
-      stack.pop();
-      return topNode;
-    }
+     */
+  typename BinaryTree<T>::Node *pop()
+  {
+    typename BinaryTree<T>::Node *topNode = stack.top();
+    stack.pop();
+    return topNode;
+  }
 
-    /**
+  /**
      * Returns the current node in the traversal or
      * NULL if the stack is empty.
      * 
      * @return The current node in the traversal
-     */	
-    typename BinaryTree<T>::Node* peek() const {
-      return empty() ? NULL : stack.top();
-    }
+     */
+  typename BinaryTree<T>::Node *peek() const
+  {
+    return empty() ? NULL : stack.top();
+  }
 
-    /**
+  /**
      * Returns true if the traversal is empty.
      * 
      * @return true if the traversal is empty.
-     */	
-    bool empty() const {
-      return stack.empty();
-    }
+     */
+  bool empty() const
+  {
+    return stack.empty();
+  }
 
-  private:
-    std::stack<typename BinaryTree<T>::Node*> stack;
-    typename BinaryTree<T>::Node* root;
+private:
+  std::stack<typename BinaryTree<T>::Node *> stack;
+  typename BinaryTree<T>::Node *root;
 };

@@ -14,8 +14,8 @@
 template <typename T>
 int BinaryTree<T>::height() const
 {
-    // Call recursive helper function on root
-    return height(root);
+  // Call recursive helper function on root
+  return height(root);
 }
 
 /**
@@ -23,18 +23,36 @@ int BinaryTree<T>::height() const
  * @param subRoot
  * @return The height of the subtree
  */
-
-
+template <typename T>
+int BinaryTree<T>::height(const Node *subRoot) const
+{
+  int countLeft;
+  int countRight;
+  if (subRoot == NULL)
+  {
+    return 0;
+  }
+  countLeft = height(subRoot->left);
+  countRight = height(subRoot->right);
+  if (countRight > countLeft)
+  {
+    return countRight + 1;
+  }
+  else
+  {
+    return countLeft + 1;
+  }
+}
 
 template <typename T>
-int BinaryTree<T>::height(const Node* subRoot) const
+int BinaryTree<T>::height(const Node *subRoot) const
 {
-    // Base case
-    if (subRoot == NULL)
-        return -1;
+  // Base case
+  if (subRoot == NULL)
+    return -1;
 
-    // Recursive definition
-    return 1 + std::max(height(subRoot->left), height(subRoot->right));
+  // Recursive definition
+  return 1 + std::max(height(subRoot->left), height(subRoot->right));
 }
 
 /**
@@ -46,11 +64,11 @@ int BinaryTree<T>::height(const Node* subRoot) const
 template <typename T>
 void BinaryTree<T>::printLeftToRight() const
 {
-    // Call recursive helper function on the root
-    printLeftToRight(root);
+  // Call recursive helper function on the root
+  printLeftToRight(root);
 
-    // Finish the line
-    std::cout << std::endl;
+  // Finish the line
+  std::cout << std::endl;
 }
 
 /**
@@ -58,44 +76,46 @@ void BinaryTree<T>::printLeftToRight() const
  * @param subRoot
  */
 template <typename T>
-void BinaryTree<T>::printLeftToRight(const Node* subRoot) const
+void BinaryTree<T>::printLeftToRight(const Node *subRoot) const
 {
-    // Base case - null node
-    if (subRoot == NULL)
-        return;
+  // Base case - null node
+  if (subRoot == NULL)
+    return;
 
-    // Print left subtree
-    printLeftToRight(subRoot->left);
+  // Print left subtree
+  printLeftToRight(subRoot->left);
 
-    // Print this node
-    std::cout << subRoot->elem << ' ';
+  // Print this node
+  std::cout << subRoot->elem << ' ';
 
-    // Print right subtree
-    printLeftToRight(subRoot->right);
+  // Print right subtree
+  printLeftToRight(subRoot->right);
 }
 
 /**
  * Flips the tree over a vertical axis, modifying the tree itself
  *  (not creating a flipped copy).
  */
-    template <typename T>
+template <typename T>
 void BinaryTree<T>::mirror()
 {
   mirror(root);
 }
 
 template <typename T>
-void BinaryTree<T>::mirror(Node* subRoot)
+void BinaryTree<T>::mirror(Node *subRoot)
 {
-  Node* temp_left;
-  if (subRoot == NULL) {
+  Node *temp_left;
+  if (subRoot == NULL)
+  {
     return;
   }
-  if (subRoot->left != NULL) {
+  if (subRoot->left != NULL)
+  {
     mirror(subRoot->left);
-
   }
-  if (subRoot->right != NULL) {
+  if (subRoot->right != NULL)
+  {
     mirror(subRoot->right);
   }
   temp_left = subRoot->left;
@@ -112,8 +132,8 @@ void BinaryTree<T>::mirror(Node* subRoot)
 template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
-    // your code here
-    return false;
+  // your code here
+  return false;
 }
 
 /**
@@ -125,6 +145,6 @@ bool BinaryTree<T>::isOrderedIterative() const
 template <typename T>
 bool BinaryTree<T>::isOrderedRecursive() const
 {
-    // your code here
-    return false;
+  // your code here
+  return false;
 }
