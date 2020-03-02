@@ -23,26 +23,6 @@ int BinaryTree<T>::height() const
  * @param subRoot
  * @return The height of the subtree
  */
-template <typename T>
-int BinaryTree<T>::height(const Node *subRoot) const
-{
-  int countLeft;
-  int countRight;
-  if (subRoot == NULL)
-  {
-    return 0;
-  }
-  countLeft = height(subRoot->left);
-  countRight = height(subRoot->right);
-  if (countRight > countLeft)
-  {
-    return countRight + 1;
-  }
-  else
-  {
-    return countLeft + 1;
-  }
-}
 
 template <typename T>
 int BinaryTree<T>::height(const Node *subRoot) const
