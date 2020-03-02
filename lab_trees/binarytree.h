@@ -151,6 +151,8 @@ protected:
     Node *root;
 
 private:
+    bool isOrderedRecursive(Node *temp, Node *&prev) const;
+
     /**
          * Put your own private helper functions here.
          * Look at the private helpers for height and printLeftToRight
