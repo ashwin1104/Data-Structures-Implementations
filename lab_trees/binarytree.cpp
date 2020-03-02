@@ -112,7 +112,7 @@ void BinaryTree<T>::mirror(Node *subRoot)
 template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
-  InorderTraversal<T> in(getRoot());
+  InorderTraversal<T> in(this->getRoot());
   Node *temp = NULL;
 
   for (TreeTraversal<int>::Iterator i = in.begin(); i != in.end(); ++i)
