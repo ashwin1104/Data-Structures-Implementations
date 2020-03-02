@@ -113,8 +113,8 @@ template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
   Node *temp = NULL;
-  InorderTraversal<T> in(this->getRoot());
-  for (TreeTraversal<int>::Iterator i = in.begin(); i != in.end(); ++i)
+  InorderTraversal<T> in(root);
+  for (auto i = in.begin(); i != in.end(); ++i)
   {
     if (temp == NULL)
     {
