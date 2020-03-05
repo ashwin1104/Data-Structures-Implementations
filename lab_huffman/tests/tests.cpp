@@ -106,7 +106,7 @@ TEST_CASE("test_encoder_binary", "[weight=1]")
 {
   buildText();
   encoder::encodeFile("tests/text.txt", "tests/test.bin", "tests/tree.huff");
-  // compareBinaryFiles("tests/test.bin", "tests/soln_test.bin");
+  compareBinaryFiles("tests/test.bin", "tests/soln_test.bin");
 }
 
 TEST_CASE("test_encoder_binary2", "[weight=1]")
