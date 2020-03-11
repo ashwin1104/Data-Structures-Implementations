@@ -57,7 +57,7 @@ bool Restaurant::pickUpOrder() {
       if (curr_front->isComplete()) {
           orders_front_ = orders_front_->getNextOrder();
           order_count_--;
-          free(curr_front);
+          delete curr_front;
           return true;
       }
   }
