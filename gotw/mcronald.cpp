@@ -113,7 +113,7 @@ McRonald::~McRonald() {
     Order* next_order;
     while (curr_order != NULL) {
         next_order = curr_order->getNextOrder();
-        free(curr_order);
+          delete curr_order;
         curr_order = next_order;
     }
    deluxe_orders_front_ = NULL;

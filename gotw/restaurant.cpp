@@ -124,7 +124,7 @@ Restaurant::~Restaurant() {
     Order* next_order;
   while (curr_order) {
       next_order = curr_order->getNextOrder();
-      free(curr_order);
+      delete curr_order;
       curr_order = next_order;
   }
  orders_front_ = NULL;
