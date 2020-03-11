@@ -110,8 +110,8 @@ int McRonald::getDeluxeOrderCount() {
 
 McRonald::~McRonald() {
     Order* curr_order = deluxe_orders_front_;
-      Order* next_order;
-    while (curr_order) {
+    Order* next_order;
+    while (curr_order != NULL) {
         next_order = curr_order->getNextOrder();
         free(curr_order);
         curr_order = next_order;
