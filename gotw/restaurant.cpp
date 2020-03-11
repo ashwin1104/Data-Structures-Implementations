@@ -120,11 +120,13 @@ std::string Restaurant::getName() {
 
 
 Restaurant::~Restaurant() {
-  Order* temp = orders_front_;
-  while (temp != NULL && temp != orders_end_) {
-    Order* next = temp->getNextOrder();
-    delete temp;
-    temp = next;
+  Order* curr_order = orders_front_;
+    Order* next_order;
+  while (curr_order) {
+      next_order = curr_order->getNextOrder();
+      free(curr_order);
+      curr_order = next_order;
   }
-  delete temp;
+ orders_front_ = NULL;
+ orders_end_ = NULL;
 }

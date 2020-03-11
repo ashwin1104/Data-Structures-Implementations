@@ -6,10 +6,16 @@
 
 
 McRonald::McRonald():Restaurant("Happy Place", 10) {
+  deluxe_orders_end_ = NULL;
+  deluxe_orders_front_ = NULL;
+  deluxe_order_count_ = 0;
 }
 
 
 McRonald::McRonald(std::string n, int m):Restaurant(n, m) {
+  deluxe_orders_end_ = NULL;
+  deluxe_orders_front_ = NULL;
+  deluxe_order_count_ = 0;
 }
 
 
@@ -36,10 +42,10 @@ bool McRonald::placeOrder(std::string n, std::string f) {
 
 
 bool McRonald::placeDeluxeOrder(std::string n, std::string f) {
-    Order* new_order = new Order(n, f);
     if (!isOpen()) {
       return false;
     }
+    Order* new_order = new Order(n, f);
     if (deluxe_order_count_==0) {
       deluxe_orders_front_ = new_order;
       deluxe_orders_end_= new_order;
@@ -104,9 +110,13 @@ int McRonald::getDeluxeOrderCount() {
 
 McRonald::~McRonald() {
     Order* curr_order = deluxe_orders_front_;
+      Order* next_order;
     while (curr_order) {
-        Order* next_order = curr_order->getNextOrder();
-        delete curr_order;
+        next_order = curr_order->getNextOrder();
+        free(curr_order);
         curr_order = next_order;
     }
+   deluxe_orders_front_ = NULL;
+   deluxe_orders_end_ = NULL;
+
 }

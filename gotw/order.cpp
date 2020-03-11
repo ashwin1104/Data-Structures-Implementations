@@ -6,7 +6,8 @@ Order::Order() {
     name_ = "Customer";
     completed_ = false;
 }
-
+Order::~Order() {
+}
 
 Order::Order(std::string n, std::string f) {
     name_ = n;

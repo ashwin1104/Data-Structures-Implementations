@@ -24,36 +24,37 @@ int main() {
     mcronald->printOrders();
     mcronald->close();
     mcronald->printOrders();
-
-
-    mcronald->placeOrder("Gene", hamburger);
-    mcronald->printOrders();
-
-    mcronald->open();
-    mcronald->printOrders();
     //
-    mcronald->placeOrder("Tina", salad);
-    mcronald->placeDeluxeOrder("Teddy", heartichoke_special);
-    mcronald->placeDeluxeOrder("Gayle", shallot_special);
-    mcronald->placeOrder("Mort", salad);
-    mcronald->printOrders();
-    mcronald->completeOrder(); // 5
-    mcronald->close();
-
-    mcronald->placeOrder("Gene", hamburger);
-    mcronald->open();
-    mcronald->printOrders();
-
-    mcronald->placeOrder("Jimmy Jr", fries);
-    mcronald->placeOrder("Jimmy Jr", fries);
-
-    mcronald->printOrders();
-
-    mcronald->placeOrder("Andy and Ollie", "2x"+hamburger); // nope
-
-
-    mcronald->close();
-    mcronald->printOrders();
+    //
+    // mcronald->placeOrder("Gene", hamburger);
+    // mcronald->printOrders();
+    //
+    // mcronald->open();
+    // mcronald->printOrders();
+    // //
+    // mcronald->placeOrder("Tina", salad);
+    // mcronald->placeDeluxeOrder("Teddy", heartichoke_special);
+    // mcronald->placeDeluxeOrder("Gayle", shallot_special);
+    // mcronald->placeOrder("Mort", salad);
+    // mcronald->printOrders();
+    // mcronald->completeOrder(); // 5
+    // mcronald->close();
+    //
+    // mcronald->placeOrder("Gene", hamburger);
+    // mcronald->open();
+    // mcronald->printOrders();
+    //
+    // mcronald->placeOrder("Jimmy Jr", fries);
+    // mcronald->placeOrder("Jimmy Jr", fries);
+    //
+    // mcronald->printOrders();
+    //
+    // mcronald->placeOrder("Andy and Ollie", "2x"+hamburger); // nope
+    //
+    //
+    // mcronald->close();
+    // mcronald->printOrders();
+    delete mcronald;
     //
     //
     // mcronald->completeOrder();

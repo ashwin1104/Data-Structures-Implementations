@@ -7,6 +7,7 @@
 class Order {
     public:
         Order();
+        ~Order();
         Order(std::string n, std::string f);
 
         void printOrder();
