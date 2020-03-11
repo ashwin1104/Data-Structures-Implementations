@@ -64,7 +64,7 @@ bool McRonald::pickUpOrder() {
         if (curr_front->isComplete()) {
             deluxe_orders_front_ = deluxe_orders_front_->getNextOrder();
             deluxe_order_count_--;
-            delete curr_front;
+            free(curr_front);
             return true;
         }
         return false;
