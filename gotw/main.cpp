@@ -60,17 +60,39 @@ int main() {
     mcronald->printOrders();
 
     mcronald->placeOrder("Andy and Ollie", "2x"+hamburger); // nope
+
+
+    mcronald->close();
+    mcronald->printOrders();
     //
     //
-    // mcronald->close();
-    // mcronald->printOrders();
+    mcronald->completeOrder();
+    mcronald->completeOrder();
+    mcronald->placeOrder("Glitter", peas_special);
+    mcronald->printOrders();
+    mcronald->completeOrder();
+    mcronald->completeOrder();
+    mcronald->placeOrder("Glitter", peas_special);
+    mcronald->printOrders();
+    mcronald->completeOrder();
+    mcronald->completeOrder();
+    mcronald->placeOrder("Glitter", peas_special);
+    mcronald->printOrders();
+    mcronald->completeOrder();
+    mcronald->completeOrder();
+    mcronald->placeOrder("Glitter", peas_special);
+    mcronald->printOrders();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+    mcronald->pickUpOrder();
+
     delete mcronald;
-    //
-    //
-    // mcronald->completeOrder();
-    // mcronald->completeOrder();
-    // mcronald->placeOrder("Glitter", peas_special);
-    // mcronald->printOrders();
 
     return 0;
 }
