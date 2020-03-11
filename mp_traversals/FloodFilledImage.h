@@ -7,6 +7,7 @@
 #include "cs225/PNG.h"
 #include <list>
 #include <iostream>
+#include <vector>
 
 #include "colorPicker/ColorPicker.h"
 #include "imageTraversal/ImageTraversal.h"
@@ -21,14 +22,15 @@ using namespace cs225;
  * are added in. Each operation should flood-fill the entire image. Each operation
  * should have its own traversal method and color picker.
  */
-class FloodFilledImage {
+class FloodFilledImage
+{
 public:
-  FloodFilledImage(const PNG & png);
-  void addFloodFill(ImageTraversal & traversal, ColorPicker & colorPicker);
+  FloodFilledImage(const PNG &png);
+  void addFloodFill(ImageTraversal &traversal, ColorPicker &colorPicker);
   Animation animate(unsigned frameInterval) const;
 
 private:
-	/** @todo [Part 2] */
-	/** add private members here*/
-
+  PNG *given_png;
+  std::vector<ImageTraversal *> traversals;
+  std::vector<ColorPicker *> colorPickers;
 };

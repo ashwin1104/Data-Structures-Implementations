@@ -16,8 +16,9 @@ using namespace cs225;
  * 
  * @param png The starting image of a FloodFilledImage
  */
-FloodFilledImage::FloodFilledImage(const PNG & png) {
-  /** @todo [Part 2] */
+FloodFilledImage::FloodFilledImage(const PNG &png)
+{
+  given_png = new PNG(png);
 }
 
 /**
@@ -27,8 +28,10 @@ FloodFilledImage::FloodFilledImage(const PNG & png) {
  * @param traversal ImageTraversal used for this FloodFill operation.
  * @param colorPicker ColorPicker used for this FloodFill operation.
  */
-void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & colorPicker) {
-  /** @todo [Part 2] */
+void FloodFilledImage::addFloodFill(ImageTraversal &traversal, ColorPicker &colorPicker)
+{
+  traversals.push_back(&traversal);
+  colorPickers.push_back(&colorPicker);
 }
 
 /**
@@ -49,9 +52,35 @@ void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & co
  *   - Then after the 8th pixel has been filled
  *   - ...
  *   - The final frame, after all pixels have been filed)
- */ 
-Animation FloodFilledImage::animate(unsigned frameInterval) const {
+ */
+Animation FloodFilledImage::animate(unsigned frameInterval) const
+{
   Animation animation;
-  /** @todo [Part 2] */
+  unsigned num_pixels;
+  animation.addFrame(*given_png);
+  for (int i = 0; i < (int)traversals.size(); i++)
+  {
+    ImageTraversal *trav = traversals[i];
+    ColorPicker *cp = colorPickers[i];
+    unsigned num_pixels = 0;
+    for (ImageTraversal::Iterator it = trav->begin(); it != trav->end(); ++it)
+    {
+      int x = (*it).x;
+      int y = (*it).y;
+      cs225::HSLAPixel color_pixel = cp->getColor(x, y);
+
+      if (num_pixels == frameInterval)
+      {
+        animation.addFrame(*given_png);
+        num_pixels = 0;
+      }
+      given_png->getPixel(x, y).h = color_pixel.h;
+      given_png->getPixel(x, y).s = color_pixel.s;
+      given_png->getPixel(x, y).l = color_pixel.l;
+      given_png->getPixel(x, y).a = color_pixel.a;
+      num_pixels++;
+    }
+  }
+  animation.addFrame(*given_png);
   return animation;
 }
