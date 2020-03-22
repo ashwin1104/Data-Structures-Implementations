@@ -9,8 +9,9 @@
 
 using namespace std;
 
-template<typename K, typename V>
-void verifyTree(AVLTree<K, V> const& tree, vector<K> const& solnPreorderTraversal, vector<string> const& solnFuncCalls) {
+template <typename K, typename V>
+void verifyTree(AVLTree<K, V> const &tree, vector<K> const &solnPreorderTraversal, vector<string> const &solnFuncCalls)
+{
     // This is based on the following assertion:
     // "Consider the AVL tree A. If some tree B has an in-order traversal that
     // produces a non-decreasing list of values and a pre-order traversal that
@@ -26,9 +27,26 @@ void verifyTree(AVLTree<K, V> const& tree, vector<K> const& solnPreorderTraversa
     REQUIRE(solnPreorderTraversal == preorderTraversal);
     REQUIRE(std::is_sorted(inorderTraversal.begin(), inorderTraversal.end()));
 }
+// TEST_CASE("test_find", "[weight=10][valgrind]")
+// {
+//     AVLTree<int, string> tree;
+//     tree.insert(1, "a");
+//     tree.insert(2, "b");
+//     tree.insert(3, "c");
+//     tree.insert(4, "d");
+//     tree.insert(5, "e");
+//     tree.insert(6, "f");
 
-TEST_CASE("test_find", "[weight=10][valgrind]") {
-	AVLTree<string, string> tree;
+//     REQUIRE(tree.find(1).compare("a") == 0);
+//     REQUIRE(tree.find(2).compare("b") == 0);
+//     REQUIRE(tree.find(3).compare("c") == 0);
+//     REQUIRE(tree.find(4).compare("d") == 0);
+//     REQUIRE(tree.find(5).compare("e") == 0);
+//     REQUIRE(tree.find(6).compare("f") == 0);
+// }
+TEST_CASE("test_find", "[weight=10][valgrind]")
+{
+    AVLTree<string, string> tree;
     tree.insert("C", "C++");
     tree.insert("free", "delete");
     tree.insert("malloc", "new");
@@ -41,11 +59,12 @@ TEST_CASE("test_find", "[weight=10][valgrind]") {
     REQUIRE(tree.find("Nico").compare("nii") == 0);
 }
 
-TEST_CASE("test_insert_small", "[weight=5]") {
+TEST_CASE("test_insert_small", "[weight=5]")
+{
     AVLTree<int, int> tree;
-    tree.insert(1,2);
-    tree.insert(4,5);
-    tree.insert(5,4);
+    tree.insert(1, 2);
+    tree.insert(4, 5);
+    tree.insert(5, 4);
 
     vector<int> solnTraversal = {4, 1, 5};
     vector<string> solnFuncCalls = {"rotateLeft"};
@@ -53,10 +72,12 @@ TEST_CASE("test_insert_small", "[weight=5]") {
     verifyTree(tree, solnTraversal, solnFuncCalls);
 }
 
-TEST_CASE("test_insert_find", "[weight=10]") {
+TEST_CASE("test_insert_find", "[weight=10]")
+{
     AVLTree<int, int> tree;
     vector<int> elems = {5, 1, 8, 0, 3, 2};
-    for (auto e : elems) {
+    for (auto e : elems)
+    {
         tree.insert(e, e);
     }
 
@@ -68,15 +89,18 @@ TEST_CASE("test_insert_find", "[weight=10]") {
     };
 
     verifyTree(tree, solnTraversal, solnFuncCalls);
-    for (auto e : elems) {
+    for (auto e : elems)
+    {
         REQUIRE(e == tree.find(e));
     }
 }
 
-TEST_CASE("test_insert_big", "[weight=10][valgrind]") {
+TEST_CASE("test_insert_big", "[weight=10][valgrind]")
+{
     AVLTree<int, string> tree;
     vector<int> elems = {55, 45, 12, 34, 56, 46, 13, 35, 57, 47, 14, 36, 58, 48, 15, 37};
-    for (auto e : elems) {
+    for (auto e : elems)
+    {
         tree.insert(e, "");
     }
 
@@ -95,14 +119,17 @@ TEST_CASE("test_insert_big", "[weight=10][valgrind]") {
     verifyTree(tree, solnTraversal, solnFuncCalls);
 }
 
-TEST_CASE("test_remove_small", "[weight=5]") {
+TEST_CASE("test_remove_small", "[weight=5]")
+{
     AVLTree<int, string> tree;
     vector<int> elems = {5, 1, 8, 0, 3, 2};
-    for (auto e : elems) {
+    for (auto e : elems)
+    {
         tree.insert(e, "");
     }
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         tree.remove(i);
     }
 
@@ -117,14 +144,17 @@ TEST_CASE("test_remove_small", "[weight=5]") {
     verifyTree(tree, solnTraversal, solnFuncCalls);
 }
 
-TEST_CASE("test_remove_big", "[weight=10][valgrind]") {
+TEST_CASE("test_remove_big", "[weight=10][valgrind]")
+{
     AVLTree<int, string> tree;
     vector<int> elems = {94, 87, 61, 96, 76, 92, 42, 78, 17, 11, 41, 95, 36, 26, 23, 93, 31, 3, 45, 18, 73, 24, 74, 1, 71, 82};
-    for (auto e : elems) {
+    for (auto e : elems)
+    {
         tree.insert(e, "");
     }
 
-    for (int r : {95, 94, 61, 76, 73, 71}) {
+    for (int r : {95, 94, 61, 76, 73, 71})
+    {
         tree.remove(r);
     }
 
