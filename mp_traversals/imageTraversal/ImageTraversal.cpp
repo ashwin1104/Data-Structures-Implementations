@@ -48,14 +48,6 @@ double ImageTraversal::calculateDelta(const HSLAPixel &p1, const HSLAPixel &p2)
 ImageTraversal::Iterator::Iterator()
 {
   given_traversal = NULL;
-  // visited_points.resize(given_png.width(), std::vector<bool>(given_png.height()));
-  // for (unsigned w = 0; w < given_png.width(); w++)
-  // {
-  //   for (unsigned h = 0; h < given_png.height(); h++)
-  //   {
-  //     visited_points[w][h] = false;
-  //   }
-  // }
 }
 
 bool ImageTraversal::Iterator::isViable(Point check_point)
@@ -64,11 +56,12 @@ bool ImageTraversal::Iterator::isViable(Point check_point)
   {
     return false;
   }
-  auto &initial = given_png.getPixel(start_point.x, start_point.y);
-  auto &pos = given_png.getPixel(check_point.x, check_point.y);
-  if ((calculateDelta(initial, pos) < given_tolerance) && !visited_points[check_point.x][check_point.y])
+  else if (calculateDelta(given_png.getPixel(start_point.x, start_point.y), given_png.getPixel(check_point.x, check_point.y)) < given_tolerance)
   {
-    return true;
+    if (!visited_points[check_point.x][check_point.y])
+    {
+      return true;
+    }
   }
   return false;
 }
@@ -128,10 +121,6 @@ ImageTraversal::Iterator &ImageTraversal::Iterator::operator++()
   while (!given_traversal->empty() && !isViable(given_traversal->peek()))
   {
     given_traversal->pop();
-    if (given_traversal->empty())
-    {
-      return *this;
-    }
   }
   if (!given_traversal->empty())
   {

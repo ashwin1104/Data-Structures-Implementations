@@ -30,10 +30,8 @@ FloodFilledImage::FloodFilledImage(const PNG &png)
  */
 void FloodFilledImage::addFloodFill(ImageTraversal &traversal, ColorPicker &colorPicker)
 {
-  ImageTraversal *trav = &traversal;
-  ColorPicker *cp = &colorPicker;
-  traversals.push_back(trav);
-  colorPickers.push_back(cp);
+  traversals.push_back(&traversal);
+  colorPickers.push_back(&colorPicker);
 }
 
 /**
