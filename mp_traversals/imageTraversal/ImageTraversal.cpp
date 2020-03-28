@@ -8,7 +8,6 @@
 
 #include "ImageTraversal.h"
 
-
 #include <cmath>
 #include <iterator>
 #include <iostream>
@@ -27,21 +26,21 @@
  * @param p2 Second pixel
  * @return the difference between two HSLAPixels
  */
- double ImageTraversal::calculateDelta(const HSLAPixel &p1, const HSLAPixel &p2)
- {
-   double h = fabs(p1.h - p2.h);
-   double s = p1.s - p2.s;
-   double l = p1.l - p2.l;
+double ImageTraversal::calculateDelta(const HSLAPixel &p1, const HSLAPixel &p2)
+{
+  double h = fabs(p1.h - p2.h);
+  double s = p1.s - p2.s;
+  double l = p1.l - p2.l;
 
-   // Handle the case where we found the bigger angle between two hues:
-   if (h > 180)
-   {
-     h = 360 - h;
-   }
-   h /= 360;
+  // Handle the case where we found the bigger angle between two hues:
+  if (h > 180)
+  {
+    h = 360 - h;
+  }
+  h /= 360;
 
-   return sqrt((h * h) + (s * s) + (l * l));
- }
+  return sqrt((h * h) + (s * s) + (l * l));
+}
 
 // /**
 //  * Default iterator constructor.
@@ -49,6 +48,14 @@
 ImageTraversal::Iterator::Iterator()
 {
   given_traversal = NULL;
+  // visited_points.resize(given_png.width(), std::vector<bool>(given_png.height()));
+  // for (unsigned w = 0; w < given_png.width(); w++)
+  // {
+  //   for (unsigned h = 0; h < given_png.height(); h++)
+  //   {
+  //     visited_points[w][h] = false;
+  //   }
+  // }
 }
 
 bool ImageTraversal::Iterator::isViable(Point check_point)
@@ -57,11 +64,11 @@ bool ImageTraversal::Iterator::isViable(Point check_point)
   {
     return false;
   }
-  else if (calculateDelta(given_png.getPixel(start_point.x, start_point.y), given_png.getPixel(check_point.x, check_point.y)) < given_tolerance)
+  auto &initial = given_png.getPixel(start_point.x, start_point.y);
+  auto &pos = given_png.getPixel(check_point.x, check_point.y);
+  if ((calculateDelta(initial, pos) < given_tolerance) && !visited_points[check_point.x][check_point.y])
   {
-    if (!visited_points[check_point.x][check_point.y]) {
-      return true;
-    }
+    return true;
   }
   return false;
 }
@@ -74,7 +81,7 @@ ImageTraversal::Iterator::Iterator(PNG png, Point start, double tolerance, Image
   given_tolerance = tolerance;
   given_traversal = given;
 
-  visited_points.resize(given_png.width(),std::vector<bool>(given_png.height()));
+  visited_points.resize(given_png.width(), std::vector<bool>(given_png.height()));
   for (unsigned w = 0; w < given_png.width(); w++)
   {
     for (unsigned h = 0; h < given_png.height(); h++)
@@ -121,6 +128,10 @@ ImageTraversal::Iterator &ImageTraversal::Iterator::operator++()
   while (!given_traversal->empty() && !isViable(given_traversal->peek()))
   {
     given_traversal->pop();
+    if (given_traversal->empty())
+    {
+      return *this;
+    }
   }
   if (!given_traversal->empty())
   {

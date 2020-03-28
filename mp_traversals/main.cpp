@@ -16,19 +16,19 @@ using namespace cs225;
 
 int main()
 {
+
   PNG png;
-  png.readFromFile("i.png");
+  png.readFromFile("lambo.png");
   FloodFilledImage image(png);
-  DFS dfs(png, Point(0, 0), 100);
-  HSLAPixel color1(120, 230, 10);
-  HSLAPixel color2(200, 123, 90);
-  MyColorPicker mine_first(png, 5);
-  MyColorPicker mine_second(png, 30);
+  BFS bfs(png, Point(350, 150), 0.92);
+  HSLAPixel first_col(120, 230, 0.2);
+  HSLAPixel second_col(300, 123, 0.9);
+  MyColorPicker first(png, first_col, 5);
+  MyColorPicker second(png, second_col, 30);
+  image.addFloodFill(bfs, first);
+  image.addFloodFill(bfs, second);
 
-  image.addFloodFill(dfs, mine_first);
-  image.addFloodFill(dfs, mine_second);
-
-  Animation animation = image.animate(1);
+  Animation animation = image.animate(1200);
   PNG lastFrame = animation.getFrame(animation.frameCount() - 1);
   lastFrame.writeToFile("myFloodFill.png");
   animation.write("myFloodFill.gif");

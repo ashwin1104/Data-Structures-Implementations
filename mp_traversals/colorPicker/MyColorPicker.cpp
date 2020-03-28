@@ -6,8 +6,8 @@
 
 using namespace cs225;
 
-MyColorPicker::MyColorPicker(PNG png, double increment)
-    : hue(0), basis(png), increment(increment)
+MyColorPicker::MyColorPicker(PNG png, HSLAPixel pix, double incr)
+    : hue(0), basis(png), new_color(pix), increment(incr)
 {
 }
 
@@ -21,25 +21,9 @@ MyColorPicker::MyColorPicker(PNG png, double increment)
  */
 HSLAPixel MyColorPicker::getColor(unsigned x, unsigned y)
 {
-  if (((x * y - (x + y) / (x - y)) * y) % 5 == 0)
+  if (x + y == increment)
   {
-    hue++;
-  }
-  if (((x * y - (x + y) / (x - y)) * y) % 5 == 1)
-  {
-    hue += 37;
-  }
-  if (((x * y - (x + y) / (x - y)) * y) % 5 == 2)
-  {
-    hue += 60;
-  }
-  if (((x * y - (x + y) / (x - y)) * y) % 5 == 3)
-  {
-    hue += 194;
-  }
-  if (((x * y - (x + y) / (x - y)) * y) % 5 == 4)
-  {
-    hue += 300;
+    return new_color;
   }
   hue = (int)hue % (50 + x + y);
   while (hue >= 360)
@@ -47,11 +31,10 @@ HSLAPixel MyColorPicker::getColor(unsigned x, unsigned y)
     hue -= 360;
   }
   HSLAPixel pixel(hue, 1, 0.5);
-  hue += increment;
+  hue += increment + hue * 0.4;
   while (hue >= 360)
   {
     hue -= 360;
   }
   return pixel;
-  return basis.getPixel(x, y);
 }
