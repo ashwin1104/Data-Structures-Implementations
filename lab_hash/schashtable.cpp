@@ -149,7 +149,6 @@ void SCHashTable<K, V>::clear()
 template <class K, class V>
 void SCHashTable<K, V>::resizeTable()
 {
-    find("got");
     size_t old_size = size;
     size = findPrime(2 * size);
     std::list<std::pair<K, V>> *table2 = new std::list<std::pair<K, V>>[size];
