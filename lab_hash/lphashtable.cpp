@@ -82,12 +82,9 @@ void LPHashTable<K, V>::insert(K const &key, V const &value)
         resizeTable();
     }
     size_t idx = hashes::hash(key, size);
-    if (table[idx])
+    while (should_probe[idx])
     {
-        while (should_probe[idx])
-        {
-            idx++;
-        }
+        idx++;
     }
     table[idx] = new std::pair<K, V>(key, value);
     should_probe[idx] = true;
