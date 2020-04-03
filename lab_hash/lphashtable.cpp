@@ -186,7 +186,7 @@ void LPHashTable<K, V>::resizeTable()
             size_t idx = hashes::hash(table[i]->first, size);
             while (table2[idx] != NULL)
             {
-                idx = (idx + 1) % size;
+                idx++;
             }
             table2[idx] = table[i];
             should_probe[idx] = true;

@@ -87,16 +87,10 @@ void DHHashTable<K, V>::insert(K const &key, V const &value)
     size_t secondary_idx = hashes::secondary_hash(key, size);
     size_t factor = 0;
     size_t idx = primary_idx;
-    unsigned count = 0;
-    while (table[idx] != NULL && count < size)
+    while (table[idx] != NULL)
     {
         ++factor;
         idx = (primary_idx + secondary_idx * factor) % size;
-        count++;
-        if (count == size)
-        {
-            return;
-        }
     }
     table[idx] = new std::pair<K, V>(key, value);
     should_probe[idx] = true;
@@ -121,8 +115,7 @@ int DHHashTable<K, V>::findIndex(const K &key) const
     size_t secondary_idx = hashes::secondary_hash(key, size);
     size_t factor = 0;
     size_t idx = primary_idx;
-    unsigned count = 0;
-    while (table[idx] != NULL && count < size)
+    while (table[idx] != NULL)
     {
         if (table[idx]->first == key)
         {
@@ -130,7 +123,6 @@ int DHHashTable<K, V>::findIndex(const K &key) const
         }
         ++factor;
         idx = (primary_idx + secondary_idx * factor) % size;
-        count++;
     }
     return -1;
 }
