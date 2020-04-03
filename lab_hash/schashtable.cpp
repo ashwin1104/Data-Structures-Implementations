@@ -161,7 +161,6 @@ void SCHashTable<K, V>::resizeTable()
             table2[i].push_back(*it);
         }
     }
-    delete[] table;
     table = new std::list<std::pair<K, V>>[size];
     for (unsigned i = 0; i < old_size; i++)
     {
