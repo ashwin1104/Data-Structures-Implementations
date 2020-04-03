@@ -86,6 +86,10 @@ void LPHashTable<K, V>::insert(K const &key, V const &value)
     {
         idx = (idx + 1) % size;
     }
+    if (idx == 1)
+    {
+        std::cout << idx << std::endl;
+    }
     table[idx] = new std::pair<K, V>(key, value);
     should_probe[idx] = true;
     return;
@@ -97,6 +101,7 @@ void LPHashTable<K, V>::remove(K const &key)
     int idx = findIndex(key);
     if (idx != -1)
     {
+        delete table[idx];
         table[idx] = NULL;
         should_probe[idx] = false;
     }

@@ -103,6 +103,7 @@ void DHHashTable<K, V>::remove(K const &key)
     int idx = findIndex(key);
     if (idx != -1)
     {
+        delete table[idx];
         table[idx] = NULL;
         should_probe[idx] = false;
     }
