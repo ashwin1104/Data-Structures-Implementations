@@ -77,17 +77,10 @@ void DHHashTable<K, V>::copy(const DHHashTable<K, V> &other)
 template <class K, class V>
 void DHHashTable<K, V>::insert(K const &key, V const &value)
 {
-    std::cout << std::endl;
-    std::cout << "INSERT_START" << std::endl;
-    std::cout << "key: " << key << " value: " << value << " hash: " << hashes::hash(key, size) << " size: " << size << std::endl;
     ++elems;
     if (shouldResize())
     {
         resizeTable();
-    }
-    else
-    {
-        std::cout << "DID NOT RESIZE" << std::endl;
     }
 
     size_t primary_idx = hashes::hash(key, size);
@@ -99,8 +92,6 @@ void DHHashTable<K, V>::insert(K const &key, V const &value)
     {
         ++factor;
         idx = (primary_idx + secondary_idx * factor) % size;
-        std::cout << "new factor: " << factor << std::endl;
-        std::cout << "new index: " << idx << std::endl;
         count++;
         if (count == size)
         {
@@ -109,30 +100,18 @@ void DHHashTable<K, V>::insert(K const &key, V const &value)
     }
     table[idx] = new std::pair<K, V>(key, value);
     should_probe[idx] = true;
-    std::cout << "inserted: key " << key << " value " << value << " @idx " << idx << " " << size << std::endl;
-    std::cout << "INSERT_END" << std::endl;
-    std::cout << std::endl;
     return;
 }
 
 template <class K, class V>
 void DHHashTable<K, V>::remove(K const &key)
 {
-    std::cout << std::endl;
-    std::cout << "REMOVE_START" << std::endl;
     int idx = findIndex(key);
     if (idx != -1)
     {
         table[idx] = NULL;
         should_probe[idx] = false;
-        std::cout << "removed " << key << " from " << idx << std::endl;
     }
-    else
-    {
-        std::cout << "did not remove " << key << " (index = " << idx << ")" << std::endl;
-    }
-    std::cout << "REMOVE_END" << std::endl;
-    std::cout << std::endl;
 }
 
 template <class K, class V>

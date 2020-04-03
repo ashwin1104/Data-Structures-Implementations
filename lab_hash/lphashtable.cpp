@@ -76,82 +76,52 @@ LPHashTable<K, V>::LPHashTable(LPHashTable<K, V> const &other)
 template <class K, class V>
 void LPHashTable<K, V>::insert(K const &key, V const &value)
 {
-    std::cout << std::endl;
-    std::cout << "INSERT_START" << std::endl;
-    std::cout << "key: " << key << " value: " << value << " hash: " << hashes::hash(key, size) << " size: " << size << std::endl;
     ++elems;
     if (shouldResize())
     {
         resizeTable();
     }
-    else
-    {
-        std::cout << "DID NOT RESIZE" << std::endl;
-    }
     size_t idx = hashes::hash(key, size);
     if (table[idx])
     {
-        std::cout << "table[hash] already exists" << std::endl;
         while (should_probe[idx])
         {
             idx++;
-            std::cout << "new index: " << idx << std::endl;
         }
     }
     table[idx] = new std::pair<K, V>(key, value);
     should_probe[idx] = true;
-    std::cout << "inserted: key " << key << " value " << value << " @idx " << idx << " " << size << std::endl;
-    std::cout << "INSERT_END" << std::endl;
-    std::cout << std::endl;
     return;
 }
 
 template <class K, class V>
 void LPHashTable<K, V>::remove(K const &key)
 {
-    std::cout << std::endl;
-    std::cout << "REMOVE_START" << std::endl;
     int idx = findIndex(key);
     if (idx != -1)
     {
         table[idx] = NULL;
         should_probe[idx] = false;
-        std::cout << "removed " << key << " from " << idx << std::endl;
     }
-    else
-    {
-        std::cout << "did not remove " << key << " (index = " << idx << ")" << std::endl;
-    }
-    std::cout << "REMOVE_END" << std::endl;
-    std::cout << std::endl;
 }
 
 template <class K, class V>
 int LPHashTable<K, V>::findIndex(const K &key) const
 {
     size_t idx = hashes::hash(key, size);
-    std::cout << std::endl;
 
-    std::cout << "FINDINDEX_start" << std::endl;
-    std::cout << "key: " << key << " code: " << idx << " size: " << size << std::endl;
     if (table[idx] != NULL)
     {
         while (!table[idx] || table[idx]->first != key)
         {
-            std::cout << idx << std::endl;
             idx++;
             if (idx == size - 1)
             {
-                std::cout << "FINDINDEX_end: idx == size - 1" << std::endl;
                 return -1;
             }
         }
-        std::cout << "FINDINDEX_end: table[idx]->first == key" << std::endl;
-        std::cout << "key: " << key << " idx: " << idx << std::endl;
         return idx;
     }
-    std::cout << "FINDINDEX_end: table[idx] is NULL";
-    std::cout << std::endl;
     return -1;
 }
 
@@ -202,8 +172,6 @@ void LPHashTable<K, V>::clear()
 template <class K, class V>
 void LPHashTable<K, V>::resizeTable()
 {
-    std::cout << std::endl;
-    std::cout << "RESIZE_START" << std::endl;
     size_t old_size = size;
     size = findPrime(2 * size);
     std::pair<K, V> **table2 = new std::pair<K, V> *[size];
@@ -233,6 +201,4 @@ void LPHashTable<K, V>::resizeTable()
         }
     }
     delete[] table2;
-    std::cout << "RESIZE_END" << std::endl;
-    std::cout << std::endl;
 }

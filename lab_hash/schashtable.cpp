@@ -51,7 +51,6 @@ SCHashTable<K, V>::SCHashTable(SCHashTable<K, V> const &other)
 template <class K, class V>
 void SCHashTable<K, V>::insert(K const &key, V const &value)
 {
-    // std::cout << hashes::hash(key, size) << " " << size << std::endl;
     ++elems;
     if (shouldResize())
     {
@@ -59,7 +58,6 @@ void SCHashTable<K, V>::insert(K const &key, V const &value)
     }
     size_t idx = hashes::hash(key, size);
     std::pair<K, V> p(key, value);
-    // std::cout << idx << " " << size << std::endl;
 
     table[idx].push_front(p);
     return;
@@ -97,12 +95,10 @@ V SCHashTable<K, V>::find(K const &key) const
         {
             if (it->first == key)
             {
-                // std::cout << "found: " << key << " " << hashes::hash(key, size) << " " << it->second << std::endl;
                 return it->second;
             }
         }
     }
-    // std::cout << "not found: " << key << " " << hashes::hash(key, size) << " " << V() << std::endl;
     return V();
 }
 
@@ -163,7 +159,6 @@ void SCHashTable<K, V>::resizeTable()
         for (it = table[i].begin(); it != table[i].end(); it++)
         {
             table2[i].push_back(*it);
-            // std::cout << table2[i].back().second << " " << it->second << std::endl;
         }
     }
     table = new std::list<std::pair<K, V>>[size];

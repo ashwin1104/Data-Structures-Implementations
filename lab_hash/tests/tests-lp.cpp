@@ -36,18 +36,12 @@ TEST_CASE("LP::testRemoveHard", "[valgrind][weight=10]")
 {
     TextFile infile("tests/textHard.txt");
     LPHashTable<string, int> hashTable(32);
-    std::cout << std::endl;
     while (infile.good())
     {
         string word = infile.getNextWord();
-        std::cout << "-------------- " << word << " --------------" << std::endl;
-        std::cout << std::endl;
 
         if (hashTable.keyExists(word))
         {
-            std::cout << std::endl;
-            std::cout << "One" << std::endl;
-            std::cout << std::endl;
 
             hashTable.remove(word);
             if (hashTable.keyExists(word))
@@ -56,14 +50,9 @@ TEST_CASE("LP::testRemoveHard", "[valgrind][weight=10]")
         }
         else
         {
-            std::cout << std::endl;
-
-            std::cout << "Two" << std::endl;
-            std::cout << std::endl;
 
             hashTable.insert(word, 0);
         }
-        std::cout << std::endl;
     }
     hashTable.insert("__SENTINEL__", 0);
     if (!hashTable.keyExists("__SENTINEL__"))
@@ -86,8 +75,6 @@ TEST_CASE("LP::testResizeOnce", "[valgrind][weight=7]")
     while (infile.good())
     {
         string word = infile.getNextWord();
-        std::cout << "-------------- " << word << " --------------" << std::endl;
-        std::cout << std::endl;
         if (!hashTable.keyExists(word))
         {
             val++;
