@@ -39,20 +39,15 @@ TEST_CASE("LP::testRemoveHard", "[valgrind][weight=10]")
     while (infile.good())
     {
         string word = infile.getNextWord();
-
         if (hashTable.keyExists(word))
         {
-
             hashTable.remove(word);
             if (hashTable.keyExists(word))
                 FAIL("Did not remove key on update");
             hashTable.insert(word, 1);
         }
         else
-        {
-
             hashTable.insert(word, 0);
-        }
     }
     hashTable.insert("__SENTINEL__", 0);
     if (!hashTable.keyExists("__SENTINEL__"))
