@@ -179,18 +179,18 @@ void LPHashTable<K, V>::resizeTable()
     delete[] should_probe;
     should_probe = new bool[size];
 
-    for (unsigned i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         table2[i] = NULL;
         should_probe[i] = false;
     }
 
-    for (unsigned i = 0; i < old_size; i++)
+    for (size_t i = 0; i < old_size; i++)
     {
         if (table[i])
         {
             size_t idx = hashes::hash(table[i]->first, size);
-            while (should_probe[idx])
+            while (table2[idx])
             {
                 idx++;
             }
