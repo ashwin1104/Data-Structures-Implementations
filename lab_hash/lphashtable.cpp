@@ -84,7 +84,7 @@ void LPHashTable<K, V>::insert(K const &key, V const &value)
     size_t idx = hashes::hash(key, size);
     if (table[idx])
     {
-        while (table[idx])
+        while (table[idx] != NULL)
         {
             idx++;
         }
