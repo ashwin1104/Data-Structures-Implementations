@@ -175,30 +175,26 @@ void LPHashTable<K, V>::resizeTable()
     size_t old_size = size;
     size = findPrime(2 * size);
     std::pair<K, V> **table2 = new std::pair<K, V> *[size];
-    for (unsigned i = 0; i < old_size; i++)
-    {
-        if (table[i])
-        {
-            table2[i] = table[i];
-        }
-        else
-        {
-            table2[i] = NULL;
-        }
-    }
-    table = new std::pair<K, V> *[size];
+    delete[] should_probe;
     should_probe = new bool[size];
-    for (unsigned i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
-        table[i] = NULL;
+        table2[i] = NULL;
         should_probe[i] = false;
     }
-    for (unsigned i = 0; i < old_size; i++)
+    for (size_t i = 0; i < old_size; i++)
     {
-        if (table2[i])
+        if (table[i] != NULL)
         {
-            insert(table2[i]->first, table2[i]->second);
+            size_t idx = hashes::hash(table[i]->first, size);
+            while (table2[idx] != NULL)
+            {
+                idx++;
+            }
+            table2[idx] = table[i];
+            should_probe[idx] = true;
         }
     }
-    delete[] table2;
+    delete[] table;
+    table = table2;
 }
