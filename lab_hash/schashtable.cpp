@@ -157,17 +157,11 @@ void SCHashTable<K, V>::resizeTable()
         typename std::list<std::pair<K, V>>::iterator it;
         for (it = table[i].begin(); it != table[i].end(); it++)
         {
-            table2[i].push_back(*it);
+            size_t idx = hashes::hash(it->first, size);
+            std::pair<K, V> p(it->first, it->second);
+            table2[idx].push_front(p);
         }
     }
-    table = new std::list<std::pair<K, V>>[size];
-    for (unsigned i = 0; i < old_size; i++)
-    {
-        typename std::list<std::pair<K, V>>::iterator it;
-        for (it = table2[i].begin(); it != table2[i].end(); it++)
-        {
-            insert(it->first, it->second);
-        }
-    }
-    delete[] table2;
+    delete[] table;
+    table = table2;
 }
