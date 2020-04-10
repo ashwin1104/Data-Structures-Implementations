@@ -64,25 +64,20 @@ void heap<T, Compare>::heapifyDown(size_t currentIdx)
     int right_idx = rightChild(currentIdx);
     int min_idx = currentIdx;
 
-    if (left_idx >= size)
+    if (!hasAChild(currentIdx))
     {
         return;
     }
 
-    if (_elems[currentIdx] > _elems[left_idx])
+    if (higherPriority(_elems[left_idx], _elems[min_idx]))
     {
-        min_idx = left_idx;
+        std::swap(_elems[currentIdx], _elems[left_idx]);
+        heapifyDown(left_idx);
     }
-
     if ((right_idx < size) && higherPriority(_elems[right_idx], _elems[min_idx]))
     {
-        min_idx = right_idx;
-    }
-
-    if (min_idx != currentIdx)
-    {
-        std::swap(_elems[currentIdx], _elems[min_idx]);
-        heapifyDown(min_idx);
+        std::swap(_elems[currentIdx], _elems[right_idx]);
+        heapifyDown(right_idx);
     }
 }
 
