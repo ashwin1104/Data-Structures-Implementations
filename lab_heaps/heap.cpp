@@ -1,4 +1,4 @@
-
+#include <iostream>
 /**
  * @file heap.cpp
  * Implementation of a heap class.
@@ -31,7 +31,7 @@ size_t heap<T, Compare>::parent(size_t currentIdx) const
 template <class T, class Compare>
 bool heap<T, Compare>::hasAChild(size_t currentIdx) const
 {
-    if (leftChild(currentIdx) > _elems.size() && rightChild(currentIdx) > _elems.size())
+    if (leftChild(currentIdx) >= _elems.size() && rightChild(currentIdx) >= _elems.size())
     {
         return false;
     }
@@ -41,15 +41,11 @@ bool heap<T, Compare>::hasAChild(size_t currentIdx) const
 template <class T, class Compare>
 size_t heap<T, Compare>::maxPriorityChild(size_t currentIdx) const
 {
-    if (leftChild(currentIdx) > _elems.size())
-    {
-        return rightChild(currentIdx);
-    }
-    else if (rightChild(currentIdx) > _elems.size())
+    if (rightChild(currentIdx) >= _elems.size())
     {
         return leftChild(currentIdx);
     }
-    else if (higherPriority(_elems[leftChild(currentIdx), rightChild(currentIdx)]))
+    else if (higherPriority(_elems[leftChild(currentIdx)], _elems[rightChild(currentIdx)]))
     {
         return leftChild(currentIdx);
     }
@@ -59,25 +55,15 @@ size_t heap<T, Compare>::maxPriorityChild(size_t currentIdx) const
 template <class T, class Compare>
 void heap<T, Compare>::heapifyDown(size_t currentIdx)
 {
-    int size = _elems.size();
-    int left_idx = leftChild(currentIdx);
-    int right_idx = rightChild(currentIdx);
-    int min_idx = currentIdx;
-
     if (!hasAChild(currentIdx))
     {
         return;
     }
-
-    if (higherPriority(_elems[left_idx], _elems[min_idx]))
+    int superior = maxPriorityChild(currentIdx);
+    if (higherPriority(_elems[superior], _elems[currentIdx]))
     {
-        std::swap(_elems[currentIdx], _elems[left_idx]);
-        heapifyDown(left_idx);
-    }
-    if ((right_idx < size) && higherPriority(_elems[right_idx], _elems[min_idx]))
-    {
-        std::swap(_elems[currentIdx], _elems[right_idx]);
-        heapifyDown(right_idx);
+        std::swap(_elems[currentIdx], _elems[superior]);
+        heapifyDown(superior);
     }
 }
 
@@ -85,7 +71,9 @@ template <class T, class Compare>
 void heap<T, Compare>::heapifyUp(size_t currentIdx)
 {
     if (currentIdx == root())
+    {
         return;
+    }
     size_t parentIdx = parent(currentIdx);
     if (higherPriority(_elems[currentIdx], _elems[parentIdx]))
     {
@@ -108,7 +96,10 @@ heap<T, Compare>::heap(const std::vector<T> &elems)
     {
         _elems.push_back(val);
     }
-    std::sort(_elems.begin() + 1, _elems.end());
+    for (unsigned i = _elems.size() - 1; i >= root(); i--)
+    {
+        heapifyDown(i);
+    }
 }
 template <class T, class Compare>
 T heap<T, Compare>::pop()
@@ -132,14 +123,14 @@ T heap<T, Compare>::pop()
 template <class T, class Compare>
 T heap<T, Compare>::peek() const
 {
-    return _elems.at(1);
+    return _elems[1];
 }
 
 template <class T, class Compare>
 void heap<T, Compare>::push(const T &elem)
 {
     _elems.push_back(elem);
-    heapifyUp(_elems.size());
+    heapifyUp(_elems.size() - 1);
 }
 
 template <class T, class Compare>
