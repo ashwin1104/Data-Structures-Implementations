@@ -151,7 +151,7 @@ void heap<T, Compare>::updateElem(const size_t &idx, const T &elem)
 template <class T, class Compare>
 bool heap<T, Compare>::empty() const
 {
-    return _elems.empty();
+    return (_elems.size() == 1);
 }
 
 template <class T, class Compare>
