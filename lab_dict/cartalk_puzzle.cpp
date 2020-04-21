@@ -21,10 +21,25 @@ using namespace std;
  * @param word_list_fname The filename of the word list to be used.
  */
 vector<std::tuple<std::string, std::string, std::string>> cartalk_puzzle(PronounceDict d,
-                                    const string& word_list_fname)
+                                                                         const string &word_list_fname)
 {
     vector<std::tuple<std::string, std::string, std::string>> ret;
 
-    /* Your code goes here! */
+    ifstream inputFile(word_list_fname);
+    if (!inputFile.is_open())
+    {
+        return vector<std::tuple<std::string, std::string, std::string>>();
+    }
+    string line;
+    while (getline(inputFile, line))
+    {
+        if (line.size() >= 3)
+        {
+            if (d.homophones(line, line.substr(1)) && d.homophones(line, line.substr(0, 1) + line.substr(2)))
+            {
+                ret.push_back(std::make_tuple(line, line.substr(1), line.substr(0, 1) + line.substr(2)));
+            }
+        }
+    }
     return ret;
 }

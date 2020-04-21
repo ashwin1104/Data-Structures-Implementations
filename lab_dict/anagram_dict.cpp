@@ -11,27 +11,44 @@
 #include <algorithm> /* I wonder why this is included... */
 #include <fstream>
 
+using std::ifstream;
 using std::string;
 using std::vector;
-using std::ifstream;
 
 /**
  * Constructs an AnagramDict from a filename with newline-separated
  * words.
  * @param filename The name of the word list file.
  */
-AnagramDict::AnagramDict(const string& filename)
+AnagramDict::AnagramDict(const string &filename)
 {
-    /* Your code goes here! */
+    ifstream inputFile(filename);
+    if (!inputFile.is_open())
+    {
+        return;
+    }
+    string line;
+    while (getline(inputFile, line))
+    {
+        string curr_line = line;
+        std::sort(curr_line.begin(), curr_line.end());
+        dict[curr_line].push_back(line);
+    }
 }
 
 /**
  * Constructs an AnagramDict from a vector of words.
  * @param words The vector of strings to be used as source words.
  */
-AnagramDict::AnagramDict(const vector<string>& words)
+AnagramDict::AnagramDict(const vector<string> &words)
 {
-    /* Your code goes here! */
+    vector<string> temp_words = words;
+    for (string s : temp_words)
+    {
+        string curr = s;
+        std::sort(curr.begin(), curr.end());
+        dict[curr].push_back(s);
+    }
 }
 
 /**
@@ -40,9 +57,18 @@ AnagramDict::AnagramDict(const vector<string>& words)
  * vector returned if no anagrams are found or the word is not in the
  * word list.
  */
-vector<string> AnagramDict::get_anagrams(const string& word) const
+vector<string> AnagramDict::get_anagrams(const string &word) const
 {
     /* Your code goes here! */
+    if (word.size() >= 3)
+    {
+        string curr = word;
+        std::sort(curr.begin(), curr.end());
+        if (dict.count(curr) != 0)
+        {
+            return dict.at(curr);
+        }
+    }
     return vector<string>();
 }
 
@@ -54,6 +80,14 @@ vector<string> AnagramDict::get_anagrams(const string& word) const
  */
 vector<vector<string>> AnagramDict::get_all_anagrams() const
 {
-    /* Your code goes here! */
-    return vector<vector<string>>();
+    std::vector<std::vector<string>> ans;
+    for (auto pair : dict)
+    {
+        vector<string> anagrams = pair.second;
+        if (anagrams.size() > 1)
+        {
+            ans.push_back(anagrams);
+        }
+    }
+    return ans;
 }
